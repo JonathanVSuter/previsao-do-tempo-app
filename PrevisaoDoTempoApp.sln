@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31515.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrevisaoDoTempoApp", "PrevisaoDoTempoApp\PrevisaoDoTempoApp.csproj", "{1985C74E-488F-4928-8297-F56B980DDA82}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrevisaoDoTempoApp.Core", "PrevisaoDoTempoApp.Core\PrevisaoDoTempoApp.Core.csproj", "{E0F87766-681E-498D-A522-CCDD63E6D8C5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrevisaoDoTempoApp.Http", "PrevisaoDoTempoApp.Http\PrevisaoDoTempoApp.Http.csproj", "{7200C489-AFD3-4F46-8B68-258331D4BA6E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrevisaoDoTempoApp.Application", "PrevisaoDoTempoApp.Application\PrevisaoDoTempoApp.Application.csproj", "{E21AEBF5-C0FF-4E88-B732-BD91A34732C5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrevisaoDoTempoApp.Infra.Dapper", "PrevisaoDoTempoApp.Infra.Dapper\PrevisaoDoTempoApp.Infra.Dapper.csproj", "{FB9A603C-0727-459E-802F-A9D22600C01D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrevisaoDoTempoApp.Tests", "PrevisaoDoTempoApp.Tests\PrevisaoDoTempoApp.Tests.csproj", "{E34794F7-53FD-43A2-AD93-554305D4D5F7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1985C74E-488F-4928-8297-F56B980DDA82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1985C74E-488F-4928-8297-F56B980DDA82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1985C74E-488F-4928-8297-F56B980DDA82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1985C74E-488F-4928-8297-F56B980DDA82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0F87766-681E-498D-A522-CCDD63E6D8C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0F87766-681E-498D-A522-CCDD63E6D8C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0F87766-681E-498D-A522-CCDD63E6D8C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0F87766-681E-498D-A522-CCDD63E6D8C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7200C489-AFD3-4F46-8B68-258331D4BA6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7200C489-AFD3-4F46-8B68-258331D4BA6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7200C489-AFD3-4F46-8B68-258331D4BA6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7200C489-AFD3-4F46-8B68-258331D4BA6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E21AEBF5-C0FF-4E88-B732-BD91A34732C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E21AEBF5-C0FF-4E88-B732-BD91A34732C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E21AEBF5-C0FF-4E88-B732-BD91A34732C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E21AEBF5-C0FF-4E88-B732-BD91A34732C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB9A603C-0727-459E-802F-A9D22600C01D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB9A603C-0727-459E-802F-A9D22600C01D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB9A603C-0727-459E-802F-A9D22600C01D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB9A603C-0727-459E-802F-A9D22600C01D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E34794F7-53FD-43A2-AD93-554305D4D5F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E34794F7-53FD-43A2-AD93-554305D4D5F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E34794F7-53FD-43A2-AD93-554305D4D5F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E34794F7-53FD-43A2-AD93-554305D4D5F7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B6DCE73C-5AD8-41AD-BC84-FE8B853673B2}
+	EndGlobalSection
+EndGlobal
