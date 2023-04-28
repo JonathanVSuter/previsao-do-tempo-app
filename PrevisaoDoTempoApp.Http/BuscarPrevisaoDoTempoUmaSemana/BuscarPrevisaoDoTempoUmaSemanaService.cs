@@ -37,11 +37,25 @@ namespace PrevisaoDoTempoApp.Http.BuscarPrevisaoDoTempoUmaSemana
                 cidades = (Cidade)serializer.Deserialize(reader);
             }
 
-            return cidades.AsDto();
+            return cidades.AsDto(codigoCidade);
         }
     }
     public static class BuscarPrevisaoDoTempoUmaSemanaExtensions
     {
+        public static CidadeDto AsDto(this Cidade cidade, int idCidade)
+        {
+            if (cidade is null) throw new ArgumentNullException($"Parâmetro {nameof(cidade)} está nulo");
+            if (!cidade.Previsao.Any() || cidade.Previsao is null) throw new ArgumentNullException($"Parâmetro {nameof(cidade.Previsao)} está nulo ou vazio");
+
+            return new CidadeDto()
+            {
+                IdCidade = idCidade,
+                Atualizacao = cidade.Atualizacao,
+                Nome = cidade.Nome,
+                Uf = cidade.Uf,
+                Previsao = cidade.Previsao.AsDto()
+            };
+        }
         public static CidadeDto AsDto(this Cidade cidade)
         {
             if (cidade is null) throw new ArgumentNullException($"Parâmetro {nameof(cidade)} está nulo");

@@ -10,6 +10,7 @@ using PrevisaoDoTempoApp.Core.Queries.BuscarDadosCidadeQuery.Dtos;
 using PrevisaoDoTempoApp.Core.Queries.ListarTodasAsCidades;
 using PrevisaoDoTempoApp.Core.Queries.ListarTodasAsCidades.Dtos;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PrevisaoDoTempoApp.Application.QueryHandlers
 {
@@ -19,7 +20,7 @@ namespace PrevisaoDoTempoApp.Application.QueryHandlers
         {
             services.AddScoped<IQueryHandler<BuscarDadosCidadeQuery, IEnumerable<CidadesQueryDto>>, BuscarDadosCidadeQueryHandler>();
             services.AddTransient<IQueryHandler<ListarTodasAsCidadesQuery, IList<ListarTodasAsCidadesDto>>, BuscarTodasAsCidadesQueryHandler>();
-            services.AddScoped<IQueryHandler<BuscarDadosPrevisaoDoTempoUmaSemanaQuery, IList<PrevisaoTempoDto>>, BuscarDadosPrevisaoDoTempoUmaSemanaQueryHandler>();
+            services.AddScoped<IQueryHandler<BuscarDadosPrevisaoDoTempoUmaSemanaQuery, Task<CidadePrevisaoDto>>, BuscarDadosPrevisaoDoTempoUmaSemanaQueryHandler>();
         }
     }
 }

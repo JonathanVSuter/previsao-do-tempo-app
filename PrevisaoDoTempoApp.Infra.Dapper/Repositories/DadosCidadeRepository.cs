@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using PrevisaoDoTempoApp.Core.Commands.GuardarDadosCidades.Dto;
 using PrevisaoDoTempoApp.Core.Commands.GuardarDadosCidades.Models;
 using PrevisaoDoTempoApp.Core.Configuration;
+using PrevisaoDoTempoApp.Core.Queries.BuscaDadosPrevisaoDoTempoUmaSemanaQuery.Dtos;
 using PrevisaoDoTempoApp.Core.Queries.BuscarDadosCidadeQuery.Dtos;
 using PrevisaoDoTempoApp.Core.Queries.ListarTodasAsCidades.Dtos;
 using PrevisaoDoTempoApp.Core.Repositories;
@@ -18,6 +19,23 @@ namespace PrevisaoDoTempoApp.Infra.Dapper.Repositories
         {
             _options = options;
         }
+
+        public CidadePrevisaoDto BuscarCidadePorId(string idCidade)
+        {
+            var sql = @"SELECT Id, Nome, Uf FROM Cidade c WHERE c.Id = @idCidade";
+
+            var parameters = new
+            {
+                idCidade
+            };
+
+            using (var sqlConnection = new SqlConnection(_options.Value.SqlServerConnection))
+            {
+                var result = sqlConnection.QueryFirstOrDefault<CidadePrevisaoDto>(sql, parameters);
+                return result;
+            }
+        }
+
         public IEnumerable<CidadesQueryDto> BuscarCidadesPorNome(string cidade)
         {
             var sql = @"SELECT Id, Nome, Uf FROM Cidade c WHERE c.Nome LIKE CONCAT('%',@nomeCidade,'%')";
@@ -57,12 +75,10 @@ namespace PrevisaoDoTempoApp.Infra.Dapper.Repositories
                         END";
             foreach (var cidade in cidades)
             {
-                var parameters = new
-                {
-                    idCidade_p = cidade.Id,
-                    nomeCidade_p = cidade.Nome,
-                    uf_p = cidade.Uf
-                };
+                var parameters = new DynamicParameters();
+                parameters.Add("@idCidade_p", cidade.Id,System.Data.DbType.Int64);
+                parameters.Add("nomeCidade_p", cidade.Nome, System.Data.DbType.String);
+                parameters.Add("uf_p", cidade.Uf, System.Data.DbType.String);                
                 using (var sqlConnection = new SqlConnection(_options.Value.SqlServerConnection))
                 {
                     var result = sqlConnection.QueryFirstOrDefault<CidadeCommandDto>(sql, parameters);
@@ -74,10 +90,10 @@ namespace PrevisaoDoTempoApp.Infra.Dapper.Repositories
 
         public IList<ListarTodasAsCidadesDto> ListarTodasAsCidades()
         {
-            var sql = @"SELECT TOP (1000) [Id]
-                            ,[Nome]
-                            ,[Uf]
-                        FROM [previsao_do_tempo_db.dev].[dbo].[Cidade]";
+            var sql = @"SELECT   [Id]
+                                ,[Nome]
+                                ,[Uf]
+                        FROM [Cidade]";
 
             using (var sqlConnection = new SqlConnection(_options.Value.SqlServerConnection))
             {

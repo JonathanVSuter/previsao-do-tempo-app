@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrevisaoDoTempoApp.Applicat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrevisaoDoTempoApp.Infra.Dapper", "PrevisaoDoTempoApp.Infra.Dapper\PrevisaoDoTempoApp.Infra.Dapper.csproj", "{FB9A603C-0727-459E-802F-A9D22600C01D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrevisaoDoTempoApp.Tests", "PrevisaoDoTempoApp.Tests\PrevisaoDoTempoApp.Tests.csproj", "{E34794F7-53FD-43A2-AD93-554305D4D5F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrevisaoDoTempoApp.Tests", "PrevisaoDoTempoApp.Tests\PrevisaoDoTempoApp.Tests.csproj", "{E34794F7-53FD-43A2-AD93-554305D4D5F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

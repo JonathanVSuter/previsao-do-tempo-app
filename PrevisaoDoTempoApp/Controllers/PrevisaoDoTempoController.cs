@@ -19,7 +19,7 @@ namespace PrevisaoDoTempoApp.Controllers
 {
 
     [ApiController]
-    [Route("[controller]/[action]")]
+    [Route("[controller]")]
     public class PrevisaoDoTempoController : ControllerBase
     {
         private readonly IRequestExecutor _requestExecutor;
@@ -30,45 +30,19 @@ namespace PrevisaoDoTempoApp.Controllers
             _requestExecutor = requestExecutor;
             _queryExecutor = queryExecutor;
             _commandDispatcher = commandDispatcher;
-        }
+        }        
+        
         [HttpGet]
-        public IActionResult BuscarDadosCidade([FromQuery] string cidadeNome)
-        {
-            var query = new BuscarDadosCidadeQuery(cidadeNome);
-
-            var result = _queryExecutor.Execute<BuscarDadosCidadeQuery, IEnumerable<CidadesQueryDto>>(query);
-
-            if (result is null || !result.ToList().Any())
-                return NotFound(new { result, sucesso = false, mensagem = $"Nenhum registro encontrado com o termo '{cidadeNome}'." });
-            return Ok(new { result, sucesso = true });
-        }
-        [HttpGet]
-        public async Task<IActionResult> BuscarEGuardarDadosCidade([FromQuery] string cidade)
-        {
-            var request = new BuscarDadosCidadeRequest(cidade);
-
-            var resultado = await _requestExecutor.ExecuteRequest<BuscarDadosCidadeRequest, CidadesDto>(request).ConfigureAwait(true);
-
-            if (resultado is null || !resultado.Cidade.Any())
-                return NotFound(new { resultado, sucesso = false, mensagem = $"Nenhum registro encontrado com o termo '{cidade}'." });
-
-            var command = new GuardarDadosCidadesCommand(resultado.Cidade.AsBusiness());
-
-            var cidadesGuardadas = _commandDispatcher.Dispatch<GuardarDadosCidadesCommand, IList<CidadeCommandDto>>(command);
-
-            return Ok(new { cidadesGuardadas, sucesso = true });
-        }
-        [HttpGet]
-        public IActionResult BuscarPrevisaoDoTempoUmaSemana([FromQuery] string codigoCidade)
+        public async Task<IActionResult> BuscarPrevisaoDoTempoUmaSemana([FromQuery] string codigoCidade)
         {
             var query = new BuscarDadosPrevisaoDoTempoUmaSemanaQuery(codigoCidade);
 
-            var resultado = _queryExecutor.Execute<BuscarDadosPrevisaoDoTempoUmaSemanaQuery, IList<PrevisaoTempoDto>>(query);
+            var resultado = await _queryExecutor.Execute<BuscarDadosPrevisaoDoTempoUmaSemanaQuery, Task<CidadePrevisaoDto>>(query);
 
-            if (resultado is null || !resultado.Any())
-                return NotFound(new { resultado, sucesso = false, mensagem = $"Nenhum registro encontrado com o termo '{codigoCidade}'." });
+            if (resultado is null)
+                return NoContent();
 
-            return Ok(new { resultado, sucesso = true });
-        }        
+            return Ok(resultado);
+        }
     }
 }

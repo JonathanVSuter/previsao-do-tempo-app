@@ -6,7 +6,7 @@ namespace PrevisaoDoTempoApp.Core.Repositories
 {
     public interface IDadosClimaTempoRepository
     {
-        IList<PrevisaoTempoDto> BuscarPrevisaoDoTempoUmaSemana(string codigoCidade);
+        IList<PrevisaoTempoDto> BuscarPrevisaoDoTempoUmaSemana(int codigoCidade);
         void GuardarDadosClima(IList<PrevisaoDb> cidadePrevisaoDoTempo);
         void VincularCidadeEClimas(CidadePrevisaoDoTempoDb cidadePrevisaoDoTempo);
     }

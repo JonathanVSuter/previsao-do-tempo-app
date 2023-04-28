@@ -10,8 +10,6 @@ namespace PrevisaoDoTempoApp.Core.Commands.GuardarDadosClimaTempo
     {
         public static CidadePrevisaoDoTempoDb AsBusiness(this CidadeDto cidadeDto)
         {
-            var cidadePrevTempo = new CidadePrevisaoDoTempoDb();
-
             if (cidadeDto is null) throw new ArgumentNullException($"Parâmetro {nameof(cidadeDto)}");
 
             return new CidadePrevisaoDoTempoDb()

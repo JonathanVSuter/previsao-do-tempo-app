@@ -9,7 +9,6 @@
         public Cidade(string nome, string uf, string id)
         {
             //colocar as validações business exceptions
-
             Nome = nome;
             Uf = uf;
             Id = id;

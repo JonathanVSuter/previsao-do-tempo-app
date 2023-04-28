@@ -21,7 +21,7 @@ namespace PrevisaoDoTempoApp.Infra.Dapper.Repositories
             _options = options;
             _unitOfWork = unitOfWork;
         }
-        public IList<PrevisaoTempoDto> BuscarPrevisaoDoTempoUmaSemana(string codigoCidade)
+        public IList<PrevisaoTempoDto> BuscarPrevisaoDoTempoUmaSemana(int codigoCidade)
         {
             var sql = @"SELECT TOP 7 CASE ct.Tempo 
 							WHEN 'ec' THEN 'Encoberto com Chuvas Isoladas'
@@ -64,10 +64,13 @@ namespace PrevisaoDoTempoApp.Infra.Dapper.Repositories
 							WHEN 'ppt' THEN 'Possibilidade de Pancadas de Chuva a Tarde'
 							WHEN 'ppm' THEN 'Possibilidade de Pancadas de Chuva pela Manhã'
 							WHEN 'lt' THEN 'Não Definido'
-						ELSE '' END AS Tempo, FORMAT(pt.DataClima,'dd/MM/yyyy') AS DataDoClima, FORMAT(pt.DataConsulta,'dd/MM/yyyy') as DataConsulta, ct.Minima as TemperaturaMinima, ct.Maxima as TemperaturaMaxima  from Previsao_Tempo pt 
+						ELSE '' END AS Tempo, FORMAT(pt.DataClima,'dd/MM/yyyy') AS DataDoClima, pt.DataConsulta as DataConsulta, ct.Minima as TemperaturaMinima, ct.Maxima as TemperaturaMaxima  from Previsao_Tempo pt 
 						INNER JOIN Cidade c on pt.IdCidade = c.Id
 						INNER JOIN Clima_Tempo ct on pt.IdClimaTempo = ct.Id
-						WHERE C.Id = @codigoCidade ORDER BY pt.DataClima, pt.DataConsulta DESC";
+						WHERE C.Id = @codigoCidade 
+						AND pt.DataClima >= GETDATE() - 6
+						AND DATEDIFF(MINUTE, pt.DataConsulta, getdate()) <=60 --depois de uma hora pesquisará novamente os dados.
+						ORDER BY pt.DataClima";
             var parameters = new
             {
                 codigoCidade
@@ -115,18 +118,17 @@ namespace PrevisaoDoTempoApp.Infra.Dapper.Repositories
             foreach (var item in previsoes)
             {
                 using (var sqlConnection = new SqlConnection(_options.Value.SqlServerConnection))
-                using (SqlCommand cmd = new SqlCommand(sql, sqlConnection))
                 {
-                    cmd.Parameters.AddWithValue("@iuv_p", item.Iuv);
-                    cmd.Parameters.AddWithValue("@tempMax_p", item.TemperaturaMaxima);
-                    cmd.Parameters.AddWithValue("@tempMin_p", item.TemperaturaMinima);
-                    cmd.Parameters.AddWithValue("@tempo_p", item.Tempo);
-
-                    sqlConnection.Open();
-                    var result = (int)cmd.ExecuteScalar();
-                    sqlConnection.Close();
-                    item.Id = result;
-                };
+					var parametros = new
+					{
+						iuv_p = item.Iuv,
+						tempMax_p = item.TemperaturaMaxima,
+						tempMin_p = item.TemperaturaMinima,
+						tempo_p = item.Tempo
+					};
+					var resultado = sqlConnection.ExecuteScalar<int>(sql, parametros);
+					item.Id = resultado;
+                }                
             }
         }
 
@@ -140,8 +142,8 @@ namespace PrevisaoDoTempoApp.Infra.Dapper.Repositories
 						 VALUES
 							   (@idCidade
 							   ,@idClimaTempo
-							   ,@dataConsulta
-							   ,@dataClima)";
+							   ,GETDATE()
+							   ,convert(datetime, convert(date, @dataClima, 23)))";
 
             foreach (var previsao in cidadeEPrevisoes.Previsao)
             {
@@ -151,7 +153,7 @@ namespace PrevisaoDoTempoApp.Infra.Dapper.Repositories
                     {
                         idCidade = cidadeEPrevisoes.IdCidade,
                         idClimaTempo = previsao.Id,
-                        dataConsulta = previsao.DataConsulta,
+                        //dataConsulta = previsao.DataConsulta,
                         dataClima = previsao.DataDoClima
                     };
 
