@@ -30,7 +30,7 @@ namespace PrevisaoDoTempoApp.Controllers
             _commandDispatcher = commandDispatcher;
             _queryExecutor = queryExecutor;
         }
-        
+        //TODO: padronizar dto's
         [HttpGet]
         public async Task<IActionResult> BuscarCidades([FromQuery] string cidade)
         {

@@ -34,6 +34,7 @@ namespace PrevisaoDoTempoApp
             services.AddQueryHandlers();
             services.AddRepositories();
             services.AddInfraOperations();
+            services.AddSwaggerGen();
             services.AddHostedService<PrevisaoDoTempoHostedService>();
             services.Configure<ApiConfiguration>(Configuration.GetSection("ConfiguracaoApi"));
         }
@@ -49,6 +50,19 @@ namespace PrevisaoDoTempoApp
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Previsão do Tempo API");
+                c.RoutePrefix = string.Empty;
+            });
+
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseAuthorization();
 
